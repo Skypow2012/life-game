@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生命游戏</title>
+  <style>
+    #scene {
+      position: relative;
+    }
+    .img {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+    }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+  <script>
+    const sceneConfig = {
+      x: 0,
+      y: 0
+    }
+    create({type: 'tree', x: 50, y: 100})
+    create({type: 'tree', x: 100, y: 130})
+    create({type: 'heart', x: sceneConfig.x + 10, y: sceneConfig.y + 10})
+    create({type: 'heart', x: sceneConfig.x + 60, y: sceneConfig.y + 10})
+    create({type: 'heart', x: sceneConfig.x + 110, y: sceneConfig.y + 10})
+    function create(config={}) {
+      const { type } = config;
+      const img = document.createElement('img');
+      img.className = 'img';
+      if (config.x) img.style.left = `${config.x - sceneConfig.x}px`;
+      if (config.y) img.style.top = `${config.y - sceneConfig.y}px`;
+      if (config.w) img.style.width = `${config.w}px`;
+      if (config.h) img.style.height = `${config.h}px`;
+      console.log(config.x)
+      switch(type) {
+        case 'tree':
+          img.src="img/tree.svg";
+          break;
+        case 'heart':
+          img.src="img/heartFull.svg";
+          break;
+        default:
+      }
+      scene.appendChild(img);
+    }
+  </script>
+</body>
+</html>
