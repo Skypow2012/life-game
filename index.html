@@ -43,6 +43,21 @@
 <body>
   <div id="scene"></div>
   <script>
+    scene.addEventListener('touchstart', function(ev){
+      window.lastTouch = ev.target;
+      if (window.lastTouch === ev.target && window.lastTouchTs > Date.now() - 300) {
+        // 禁用默认的双击缩放
+        ev.preventDefault();
+        return false;
+      }
+      window.lastTouchTs = Date.now();
+      // 如果点到可操作区域，触发对应操作
+      if (ev.target.className.indexOf('img') > -1) {
+        return true;
+      }
+      // 禁用默认的双指缩放
+      ev.preventDefault();
+    }, true)
     const sceneConfig = {
       x: 0,
       y: 0
