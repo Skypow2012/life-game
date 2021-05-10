@@ -62,7 +62,7 @@
     create({type: 'heart', x: sceneConfig.x + 110, y: sceneConfig.y + 10})
     function create(config={}) {
       const { type } = config;
-      const img = document.createElement('img');
+      const img = document.createElement('div');
       img.className = 'img';
       if (config.x) img.style.left = `${config.x - sceneConfig.x}px`;
       if (config.y) img.style.top = `${config.y - sceneConfig.y}px`;
@@ -71,10 +71,10 @@
       console.log(config.x)
       switch(type) {
         case 'tree':
-          img.src="img/tree.svg";
+          img.style.background='url("img/tree.svg")';
           break;
         case 'heart':
-          img.src="img/heartFull.svg";
+          img.style.background='url("img/heartFull.svg")';
           img.classList.add('heart');
           // 第一次被攻击
           img.onclick = function() {
@@ -84,7 +84,7 @@
             img.classList.add('beated')
             window.heatBeatTimer = setTimeout(()=>{
               img.classList.remove('beated');
-              img.src = "img/heartHalf.svg";
+              img.style.background = 'url("img/heartHalf.svg")';
             }, 300)
           }
           break;
