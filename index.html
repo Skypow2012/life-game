@@ -20,6 +20,7 @@
       width: 48px;
       height: 48px;
       pointer-events: none;
+      transform: translateX(-24px) translateY(-24px);
     }
     .heart.beated {
       animation: shake 0.3s;
@@ -58,9 +59,9 @@
     }
     // 新手村的第一棵树
     create({type: 'tree', x: 50, y: 100})
-    create({type: 'heart', x: sceneConfig.x + 10, y: sceneConfig.y + 10})
-    create({type: 'heart', x: sceneConfig.x + 60, y: sceneConfig.y + 10})
-    create({type: 'heart', x: sceneConfig.x + 110, y: sceneConfig.y + 10})
+    create({type: 'heart', x: sceneConfig.x + 30, y: sceneConfig.y + 30})
+    create({type: 'heart', x: sceneConfig.x + 80, y: sceneConfig.y + 30})
+    create({type: 'heart', x: sceneConfig.x + 130, y: sceneConfig.y + 30})
     create({type: 'hero', x: 80, y: 100})
     function create(config={}) {
       const { type } = config;

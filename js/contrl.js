@@ -8,7 +8,6 @@ window.onload = function () {
   var cTop = 38;
   var cLeft = 38;
   var maxR = 75;
-  var userSize = 20;
   var maxUserX = document.body.clientWidth;
   var maxUserY = document.body.clientHeight;
   window.x = cLeft;
@@ -126,14 +125,14 @@ window.onload = function () {
   }
 
   function updateUser(x, y) {
-    if (x > maxUserX - userSize) {
-      x = maxUserX - userSize;
+    if (x > maxUserX) {
+      x = maxUserX;
     }
     if (x < 0) {
       x = 0;
     }
-    if (y > maxUserY - userSize) {
-      y = maxUserY - userSize;
+    if (y > maxUserY) {
+      y = maxUserY;
     }
     if (y < 0) {
       y = 0;
@@ -170,7 +169,8 @@ window.onload = function () {
     console.log(msg);
     // document.body.innerHTML += '<p>' + msg + '</p>';
   }
-  window.inter = setInterval(function (ele) {
+  window.inter = setInterval(function () {
+    if (!isCtrling) return;
     let _x = (window.x - cTop) / 10;
     let _y = (window.y - cLeft) / 10;
     let user = document.getElementById('user')

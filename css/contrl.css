@@ -21,6 +21,7 @@ body {
   opacity: .5;
   z-index: 1;
   pointer-events: none;
+  transform: translateX(-10px) translateY(-10px);
 }
 
 .ctrl .circle {
