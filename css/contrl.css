@@ -1,0 +1,46 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  position: fixed;
+  background-color: rgba(128, 128, 128, 1);
+}
+
+.ctrl {
+  display: none;
+  position: absolute;
+  top: 300px;
+  left: 200px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid skyblue;
+  /* background-color: green; */
+  box-sizing: border-box;
+  opacity: .5;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ctrl .circle {
+  position: absolute;
+  top: calc(50px - 5px);
+  left: calc(50px - 5px);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 10px solid skyblue;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+#user {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: peachpuff;
+  width: 48px;
+  height: 48px;
+  z-index: 2;
+}

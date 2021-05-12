@@ -19,6 +19,7 @@
       position: absolute;
       width: 48px;
       height: 48px;
+      pointer-events: none;
     }
     .heart.beated {
       animation: shake 0.3s;
@@ -67,14 +68,15 @@
       img.className = 'img';
       if (config.x) img.style.left = `${config.x - sceneConfig.x}px`;
       if (config.y) img.style.top = `${config.y - sceneConfig.y}px`;
+      if (config.y) img.style.zIndex = parseInt(config.y);
       if (config.w) img.style.width = `${config.w}px`;
       if (config.h) img.style.height = `${config.h}px`;
-      console.log(config.x)
       switch(type) {
         case 'tree':
           img.style.background='url("img/tree.svg")';
           break;
         case 'hero':
+          img.id="user";
           img.style.background='url("img/hero.svg")';
           break;
         case 'heart':
@@ -97,5 +99,8 @@
       scene.appendChild(img);
     }
   </script>
+</div>
+<link href="css/contrl.css" rel="stylesheet" >
+<script src="js/contrl.js" type="text/javascript"></script>
 </body>
 </html>
