@@ -60,6 +60,7 @@
     create({type: 'heart', x: sceneConfig.x + 10, y: sceneConfig.y + 10})
     create({type: 'heart', x: sceneConfig.x + 60, y: sceneConfig.y + 10})
     create({type: 'heart', x: sceneConfig.x + 110, y: sceneConfig.y + 10})
+    create({type: 'hero', x: 80, y: 100})
     function create(config={}) {
       const { type } = config;
       const img = document.createElement('div');
@@ -72,6 +73,9 @@
       switch(type) {
         case 'tree':
           img.style.background='url("img/tree.svg")';
+          break;
+        case 'hero':
+          img.style.background='url("img/hero.svg")';
           break;
         case 'heart':
           img.style.background='url("img/heartFull.svg")';
