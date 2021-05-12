@@ -174,6 +174,13 @@ window.onload = function () {
     let _x = (window.x - cTop) / 10;
     let _y = (window.y - cLeft) / 10;
     let user = document.getElementById('user')
+    // 判断角色朝向
+    let oldOriginLeft = user.style.transform.indexOf(180) > -1;
+    let newOriginLeft = _x < 0;
+    if (oldOriginLeft !== newOriginLeft) {
+      console.log('change')
+      user.style.transform = `translateX(-24px) translateY(-24px) rotateY(${newOriginLeft?180:0}deg)`
+    }
     let uX = getNum(user.style.left);
     let uY = getNum(user.style.top);
     let fX = uX + _x;
