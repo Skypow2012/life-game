@@ -153,6 +153,7 @@ window.onload = function () {
     user.style.left = x + 'px';
     user.style.top = y + 'px';
     user.style.zIndex = parseInt(y);
+    if (user.locCb) user.locCb(x, y);
   }
 
   function getNum(val) {

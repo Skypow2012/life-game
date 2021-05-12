@@ -45,6 +45,9 @@
 <body>
   <div id="scene"></div>
   <script>
+    const posDic = {}
+    let heartCnt = 0;
+    if (localStorage.isDead) alert('您已阵亡');
     scene.addEventListener('touchstart', function(ev){
       // 禁用默认事件
       ev.preventDefault();
@@ -59,13 +62,20 @@
     }
     // 新手村的第一棵树
     create({type: 'tree', x: 50, y: 100})
-    create({type: 'heart', x: sceneConfig.x + 30, y: sceneConfig.y + 30})
-    create({type: 'heart', x: sceneConfig.x + 80, y: sceneConfig.y + 30})
-    create({type: 'heart', x: sceneConfig.x + 130, y: sceneConfig.y + 30})
-    create({type: 'hero', x: 80, y: 100})
+    if (!localStorage.isDead) {
+      create({type: 'heart', x: sceneConfig.x + 30, y: sceneConfig.y + 30})
+      create({type: 'heart', x: sceneConfig.x + 80, y: sceneConfig.y + 30})
+      create({type: 'heart', x: sceneConfig.x + 130, y: sceneConfig.y + 30})
+      create({type: 'hero', x: 80, y: 100})
+    }
     function create(config={}) {
       const { type } = config;
       const img = document.createElement('div');
+      img.config = config;
+      const id = Math.random().toString().substr(2);
+      config.img = img;
+      config.id = id;
+      posDic[id] = config;
       img.className = 'img';
       if (config.x) img.style.left = `${config.x - sceneConfig.x}px`;
       if (config.y) img.style.top = `${config.y - sceneConfig.y}px`;
@@ -79,19 +89,45 @@
         case 'hero':
           img.id="user";
           img.style.background='url("img/hero.svg")';
+          img.locCb = function(x, y) {
+            console.log(',xy', x, y)
+            for (key in posDic) {
+              const tarConfig = posDic[key];
+              if (tarConfig.type === 'heart') {
+                if (Math.abs(tarConfig.x - x) < 30 && Math.abs(tarConfig.y - y) < 30) {
+                  tarConfig.img.click();
+                }
+              }
+            }
+          }
           break;
         case 'heart':
           img.style.background='url("img/heartFull.svg")';
           img.classList.add('heart');
+          heartCnt++;
           // 第一次被攻击
           img.onclick = function() {
-            clearTimeout(window.heatBeatTimer);
+            if (img.isBeating) return;
+            img.isBeating = true;
             img.style.display = 'none';
             img.style.display = 'inline-block';
             img.classList.add('beated')
             window.heatBeatTimer = setTimeout(()=>{
+              delete img.isBeating;
               img.classList.remove('beated');
               img.style.background = 'url("img/heartHalf.svg")';
+              img.config.isBeated = img.config.isBeated || 0;
+              img.config.isBeated++;
+              if (img.config.isBeated >= 2) {
+                img.style.display = 'none';
+                delete posDic[img.config.id];
+                heartCnt--;
+                if (heartCnt === 0) {
+                  localStorage.isDead = 1;
+                  alert('您已阵亡');
+                  user.style.display = 'none';
+                }
+              }
             }, 300)
           }
           break;
