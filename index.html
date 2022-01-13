@@ -20,7 +20,7 @@
       width: 48px;
       height: 48px;
       pointer-events: none;
-      transform: translateX(-24px) translateY(-24px);
+      transform: translateX(-50%) translateY(-50%);
     }
     .heart.beated {
       animation: shake 0.3s;
@@ -76,7 +76,7 @@
       config.img = img;
       config.id = id;
       posDic[id] = config;
-      img.className = 'img';
+      img.className = 'img type-'+type;
       if (config.x) img.style.left = `${config.x - sceneConfig.x}px`;
       if (config.y) img.style.top = `${config.y - sceneConfig.y}px`;
       if (config.y) img.style.zIndex = parseInt(config.y);
@@ -120,6 +120,7 @@
               img.config.isBeated++;
               if (img.config.isBeated >= 2) {
                 img.style.display = 'none';
+                img.className = img.className.replace(' heart', ' broken-heart')
                 delete posDic[img.config.id];
                 heartCnt--;
                 if (heartCnt === 0) {
@@ -134,6 +135,7 @@
         default:
       }
       scene.appendChild(img);
+      return img
     }
   </script>
 </div>

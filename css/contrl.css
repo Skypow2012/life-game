@@ -36,6 +36,10 @@ body {
   pointer-events: none;
 }
 
+.img {
+  box-sizing: border-box;
+}
+
 #user {
   position: fixed;
   top: 0px;
@@ -44,4 +48,12 @@ body {
   width: 48px;
   height: 48px;
   z-index: 2;
+}
+
+.type-bump {
+  width: 0;
+  height: 0;
+  border: 0px solid rgba(255,0,0,0);
+  border-radius: 50%;
+  transition: border 0.2s;
 }

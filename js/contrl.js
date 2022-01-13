@@ -1,6 +1,7 @@
 function updateTime(time) {
   window.time = time;
 }
+var isHolding;
 window.onload = function () {
   var isCtrling = false;
   var outTop = 300;
@@ -55,6 +56,18 @@ window.onload = function () {
 
   function startCtrl(e) {
     isCtrling = true;
+    isHolding = setInterval(()=>{
+      // 第一次蓄力
+      let uX = getNum(user.style.left);
+      let uY = getNum(user.style.top);
+      addBump(uX, uY)
+      stopHolding()
+    }, 1000)
+  }
+
+  function stopHolding() {
+    delete isHolding;
+    clearInterval(isHolding)
   }
 
   function touchMoveCtrl(e) {
@@ -85,6 +98,7 @@ window.onload = function () {
     isCtrling = false;
     circleBackStart();
     hideCtrl();
+    stopHolding();
   }
 
   // 让控制器圆点回到原点
@@ -122,6 +136,7 @@ window.onload = function () {
       y = y * maxR / r;
     }
     moveCircle(x + cLeft, y + cTop)
+    stopHolding();
   }
 
   function updateUser(x, y) {
@@ -138,6 +153,25 @@ window.onload = function () {
       y = 0;
     }
     moveUser(x, y)
+  }
+
+  function addBump(x, y, r=25) {
+    const bump = create({type: 'bump', x, y})
+    bump.style.borderWidth = '10px';
+    bump.style.borderColor = 'rgba(0,0,0,1)';
+    // 爆炸事件
+    setTimeout(()=>{
+      bump.style.borderWidth = r+'px';
+      bump.style.borderColor = 'rgba(255,0,0,.5)';
+      setTimeout(()=>{
+        scene.removeChild(bump);
+        let uX = getNum(user.style.left);
+        let uY = getNum(user.style.top);
+        if ((uX - x) ** 2 + (uY - y) ** 2 <= r**2) {
+          document.querySelector('.heart').click()
+        }
+      }, 200)
+    }, 1000)
   }
 
   function moveUser(x, y) {
