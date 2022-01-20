@@ -195,7 +195,6 @@ window.onload = function () {
       return 0;
     }
   }
-  window.utils = window.utils || {};
   window.utils.getNum = getNum;
 
   function log(msg) {
@@ -203,6 +202,13 @@ window.onload = function () {
     // document.body.innerHTML += '<p>' + msg + '</p>';
   }
   window.inter = setInterval(function () {
+    for (id in objDic) {
+      obj = objDic[id];
+      if (obj.config.type === 'enemy') {
+        // 敌人逻辑
+        obj.closeUser()
+      }
+    }
     if (!isCtrling) return;
     let _x = (window.x - cTop) / 10;
     let _y = (window.y - cLeft) / 10;

@@ -45,6 +45,7 @@
 <body>
   <div id="scene"></div>
   <script>
+    window.utils = window.utils || {}
     const posDic = {}
     const objDic = {}
     let heartCnt = 0;
@@ -68,7 +69,7 @@
       create({type: 'heart', x: sceneConfig.x + 80, y: sceneConfig.y + 30})
       create({type: 'heart', x: sceneConfig.x + 130, y: sceneConfig.y + 30})
       create({type: 'hero', x: 80, y: 100})
-      create({type: 'enemy', x: 80, y: 100})
+      create({type: 'enemy', x: 80, y: 100, v: 2})
     }
     function create(config={}) {
       const { type } = config;
@@ -97,6 +98,22 @@
           img.style.background='url("img/tree.svg")';
           img.hurted = function() {
             img.destroy();
+          }
+          img.closeUser = function() {
+            let user = document.getElementById('user')
+            let uX = utils.getNum(user.style.left);
+            let uY = utils.getNum(user.style.top);
+            let oX = utils.getNum(img.style.left);
+            let oY = utils.getNum(img.style.top);
+            let dX = uX - oX;
+            let dY = uY - oY;
+            let d = Math.sqrt(dX**2 + dY**2);
+            if (d < 1) return; // 太近了就不继续接近，防止鬼畜
+            let v = img.config.v;
+            let _dX = dX * v / d;
+            let _dY = dY * v / d;
+            img.style.left = (oX + _dX) + 'px';
+            img.style.top = (oY + _dY) + 'px';
           }
           break;
         case 'hero':

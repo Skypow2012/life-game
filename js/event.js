@@ -1,7 +1,6 @@
 function bumpCheck(x, y, r) {
   for (id in objDic) {
     img = objDic[id];
-    console.log(img)
     switch (img.config.type) {
       case 'hero':
       case 'enemy':
