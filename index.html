@@ -46,6 +46,7 @@
   <div id="scene"></div>
   <script>
     const posDic = {}
+    const objDic = {}
     let heartCnt = 0;
     if (localStorage.isDead) alert('您已阵亡');
     scene.addEventListener('touchstart', function(ev){
@@ -67,6 +68,7 @@
       create({type: 'heart', x: sceneConfig.x + 80, y: sceneConfig.y + 30})
       create({type: 'heart', x: sceneConfig.x + 130, y: sceneConfig.y + 30})
       create({type: 'hero', x: 80, y: 100})
+      create({type: 'enemy', x: 80, y: 100})
     }
     function create(config={}) {
       const { type } = config;
@@ -76,21 +78,31 @@
       config.img = img;
       config.id = id;
       posDic[id] = config;
+      objDic[id] = img;
       img.className = 'img type-'+type;
       if (config.x) img.style.left = `${config.x - sceneConfig.x}px`;
       if (config.y) img.style.top = `${config.y - sceneConfig.y}px`;
       if (config.y) img.style.zIndex = parseInt(config.y);
       if (config.w) img.style.width = `${config.w}px`;
       if (config.h) img.style.height = `${config.h}px`;
+      img.destroy = function() {
+        scene.removeChild(img);
+        delete objDic[img.id];
+      }
       switch(type) {
         case 'tree':
           img.style.background='url("img/tree.svg")';
+          break;
+        case 'enemy':
+          img.style.background='url("img/tree.svg")';
+          img.hurted = function() {
+            img.destroy();
+          }
           break;
         case 'hero':
           img.id="user";
           img.style.background='url("img/hero.svg")';
           img.locCb = function(x, y) {
-            console.log(',xy', x, y)
             for (key in posDic) {
               const tarConfig = posDic[key];
               if (tarConfig.type === 'heart') {
@@ -99,6 +111,9 @@
                 }
               }
             }
+          }
+          img.hurted = function() {
+            document.querySelector('.heart').click()
           }
           break;
         case 'heart':
@@ -140,6 +155,7 @@
   </script>
 </div>
 <link href="css/contrl.css" rel="stylesheet" >
+<script src="js/event.js" type="text/javascript"></script>
 <script src="js/contrl.js" type="text/javascript"></script>
 </body>
 </html>

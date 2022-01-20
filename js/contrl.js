@@ -164,12 +164,8 @@ window.onload = function () {
       bump.style.borderWidth = r+'px';
       bump.style.borderColor = 'rgba(255,0,0,.5)';
       setTimeout(()=>{
-        scene.removeChild(bump);
-        let uX = getNum(user.style.left);
-        let uY = getNum(user.style.top);
-        if ((uX - x) ** 2 + (uY - y) ** 2 <= r**2) {
-          document.querySelector('.heart').click()
-        }
+        bump.destroy();
+        bumpCheck(x, y, r)
       }, 200)
     }, 1000)
   }
@@ -199,6 +195,8 @@ window.onload = function () {
       return 0;
     }
   }
+  window.utils = window.utils || {};
+  window.utils.getNum = getNum;
 
   function log(msg) {
     console.log(msg);
